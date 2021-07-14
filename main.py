@@ -1,22 +1,25 @@
 # -*- coding:utf-8 -*-
 
 from sklearn.model_selection import train_test_split
-from sklearn.datasets import make_moons
+from sklearn.datasets import make_moons, make_blobs
 import matplotlib.pyplot as plt
-import pandas as pd
 import numpy as np
 
 
-def generate_dataset(n_samples=1000, noise=0.1):
+def generate_dataset(mode="blobs", n_samples=1000, noise=0.3):
     """
     generate dataset
+    :param mode: str, dataset distribution, "blobs" (default) or "moon"
     :param n_samples: int, total number of generated examples
     :param noise: float, noise of dataset
     :return:
         X, np.array, features, size (number of examples, dim of features)
         y, np.array, labels, size (number of examples, 1)
     """
-    X, y = make_moons(n_samples=n_samples, noise=0.1)
+    if mode == "moons":
+        X, y = make_moons(n_samples=n_samples, noise=noise)
+    else:
+        X, y = make_blobs(n_samples=n_samples, centers=2)
     X = np.array(X)
     y = np.array(y).reshape(-1, 1)
     return X, y
@@ -29,7 +32,7 @@ def sigmoid(z):
     :return:
         s, np.array, sigmoid of z
     """
-    s = np.divide(1., 1. + np.exp(-1. * z))
+    s = 1. / (1. + np.exp(-1. * z))
     return s
 
 
@@ -61,19 +64,19 @@ def propagate(w, b, X, y):
         grad.dw, np.array, gradient of the loss with respect to w, thus same shape as w
         grad.db, float, gradient of the loss with respect to b, thus same shape as b
     """
-    m = X.shape[0]
+    m = X.shape[1]
 
     # forward propagate
     a = sigmoid(np.dot(w.T, X) + b)
-    cost = -1.0 / X.shape[1] * np.sum(y * np.log(a) + (1 - y) * np.log(1 - a))
+    cost = -1./m * np.sum(y * np.log(a) + (1. - y) * np.log(1. - a))
 
     # backward propagate
-    dw = np.dot(X, (a - y).T) / X.shape[1]
-    db = np.sum(a - y) / X.shape[1]
+    dw = 1./m * np.dot(X, (a - y).T)
+    db = 1./m * np.sum(a - y)
     assert dw.shape == w.shape
     assert db.dtype == float
 
-    cost = np.squeeze(cost)
+    cost = np.squeeze(np.array(cost))
     grads = {"dw": dw,
              "db": db}
 
@@ -136,8 +139,13 @@ def predict(w, b, X):
     y_pred = np.zeros((1, m))
     w = w.reshape(X.shape[0], 1)
     a = sigmoid(np.dot(w.T, X) + b)
-    a_mask = (a[0, :] > 0.5)
-    a[0, :] = a[0, :] * a_mask
+
+    for i in range(m):
+        if a[0, i] > 0.5:
+            y_pred[0, i] = 1
+        else:
+            y_pred[0, i] = 0
+
     assert y_pred.shape == (1, m)
 
     return y_pred
@@ -198,11 +206,11 @@ def plot_cost(costs, learning_rate):
 
 def main():
     np.random.seed(2021)
-    X, y = generate_dataset()
+    X, y = generate_dataset(mode="moons")
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle=True)
     X_train, X_test = X_train.T, X_test.T
     y_train, y_test = y_train.T, y_test.T
-    cache = model(X_train, y_train, X_test, y_test, num_iterations=1000, learning_rate=0.5, show=True)
+    cache = model(X_train, y_train, X_test, y_test, num_iterations=1000, learning_rate=0.05, show=True)
     plot_cost(cache["costs"], cache["learning_rate"])
 
 
