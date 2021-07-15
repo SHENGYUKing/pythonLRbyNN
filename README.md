@@ -31,9 +31,9 @@ update bias (b):
 The alpha in the above formulas means learning rate, and it is usually a very small number (about 0.01).    
 
 ### predict
-At last, take the updated parameters into activation function to get the predictions.    
+At last, take the updated parameters into forward propagation to get the predictions.    
 <img src="https://latex.codecogs.com/png.image?\dpi{120}&space;\bg_white&space;\hat{Y}=A=\sigma(w^T&space;X&plus;b)=\mathit{sigmoid}(w^T&space;X&plus;b)" title="\bg_white \hat{Y}=A=\sigma(w^T X+b)=\mathit{sigmoid}(w^T X+b)" />    
-In fact that the result y_hat means the probability, and we can design reasonable thresholds for getting the exact  conclusion according to reality situation.    
+In fact that the result y_hat means the probability, and we can design reasonable thresholds for getting the exact conclusion according to reality situation.    
 
 ## custom function summary
 - generate_dataset(mode, n_samples, noise):    
