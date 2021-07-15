@@ -32,7 +32,7 @@ The alpha in the above formulas means learning rate, and it is usually a very sm
 
 ### predict
 At last, take the updated parameters into forward propagation to get the predictions.    
-<img src="https://latex.codecogs.com/png.image?\dpi{120}&space;\bg_white&space;\hat{Y}=A=\sigma(w^T&space;X&plus;b)=\mathit{sigmoid}(w^T&space;X&plus;b)" title="\bg_white \hat{Y}=A=\sigma(w^T X+b)=\mathit{sigmoid}(w^T X+b)" />    
+<img src="https://latex.codecogs.com/png.image?\dpi{120}&space;\bg_white&space;\hat{Y}=\sigma(w^T&space;X&plus;b)" title="\bg_white \hat{Y}=\sigma(w^T X+b)" />    
 In fact that the result y_hat means the probability, and we can design reasonable thresholds for getting the exact conclusion according to reality situation.    
 
 ## custom function summary
