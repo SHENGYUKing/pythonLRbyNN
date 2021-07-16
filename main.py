@@ -55,7 +55,7 @@ def propagate(w, b, X, y):
     """
     implement the cost function and its gradient for the propagation, including forward and backward
     :param w: np.array, weights of features, size (dim of features, 1)
-    :param b: float, bias of features
+    :param b: float, biases of features
     :param X: np.array, features, size (dim of features, number of examples)
     :param y: np.array, true labels, size (1, number of examples)
     :return:
@@ -87,7 +87,7 @@ def optimize(w, b, X, y, num_iterations, learning_rate, show=False):
     """
     function to optimize w and b by gradient descent algorithm
     :param w: np.array, weights, size (dim of features, 1)
-    :param b: float, bias
+    :param b: float, biases
     :param X: np.array, features matrix, size (dim of features, number of examples)
     :param y: np.array, labels, size (1, number of examples)
     :param num_iterations: int, number of iterations of the optimization loop
@@ -95,12 +95,12 @@ def optimize(w, b, X, y, num_iterations, learning_rate, show=False):
     :param show: bool, True to print cost every 100 iter, default False
     :return:
         costs, list, cost every 100 iter
-        params, dict, dictionary containing the weights w and bias b
+        params, dict, dictionary containing the weights w and biases b
         params.w, np.array, updated weights of the logistics regression function
-        params,b, float, updated bias of the logistics regression function
-        grads, dict, dictionary containing the gradients of the weights and bias with respect to the cost function
+        params,b, float, updated biases of the logistics regression function
+        grads, dict, dictionary containing the gradients of the weights and biases with respect to the cost function
         grads.dw, np.array, the gradients of the weights with respect to the cost function
-        grads,db, float, the gradients of the bias with respect to the cost function
+        grads,db, float, the gradients of the biases with respect to the cost function
     """
     costs = []
 
@@ -130,7 +130,7 @@ def predict(w, b, X):
     """
     predict the result of examples' features using learned logistic regression parameters (w, b)
     :param w: np.array, learned weights of LR function
-    :param b: float, learned bias of LR function
+    :param b: float, learned biases of LR function
     :param X: np.array, input examples' features, size (dim of features, number of examples)
     :return:
         y_pred, np.array, predictions for the input examples
@@ -167,7 +167,7 @@ def model(X_train, y_train, X_test, y_test, num_iterations=1000, learning_rate=0
         cache.y_pred_train, np.array, prediction of training examples
         cache.y_pred_test, np.array, prediction of testing examples
         cache.w, np.array, learned weights of LR function
-        cache.b, learned bias of LR function
+        cache.b, learned biases of LR function
         cache.num_iterations, number of iterations of the optimization loop
         cache.learning_rate, learning rate of the gradient descent update rule
     """
